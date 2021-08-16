@@ -30,8 +30,8 @@
   ImportDeclaration |
   Block |
   ExpressionStatement |
-  NamedBlockCell { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" Block } |
-  NamedExpressionCell { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" expression semi } |
+  NamedBlockCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" Block } |
+  NamedExpressionCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" expression semi } |
   NamedClassCell { kw<"class"> !cellname VariableDefinition (kw<"extends"> expression)? ClassBody } |
   NamedFunctionCell { async? kw<"function"> Star? !cellname VariableDefinition ParamList Block }
 }
