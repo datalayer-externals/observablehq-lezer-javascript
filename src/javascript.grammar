@@ -20,7 +20,6 @@
   and @left,
   or @left,
   ternary @right,
-  cellname @cut,
   assign @right,
   comma @left,
   statement @cut
@@ -30,10 +29,15 @@
   ImportDeclaration |
   Block |
   ExpressionStatement |
-  NamedBlockCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" Block } |
-  NamedExpressionCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" expression semi } |
-  NamedClassCell { kw<"class"> !cellname VariableDefinition (kw<"extends"> expression)? ClassBody } |
-  NamedFunctionCell { async? kw<"function"> Star? !cellname VariableDefinition ParamList Block }
+  NamedBlockCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) "=" Block } |
+  NamedExpressionCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) "=" expression semi } |
+  // We have to supply rules for both named and unnamed classes and functions
+  // due to the way statement precedence is specified. Without this, it tries to
+  // apply the NamedClassCell to a function/class expression, which then fails
+  UnnamedClassCell { !statement kw<"class"> (kw<"extends"> expression)? ClassBody } |
+  NamedClassCell { !statement kw<"class"> VariableDefinition (kw<"extends"> expression)? ClassBody } |
+  UnnamedFunctionCell { !statement async? kw<"function"> Star? ParamList Block } |
+  NamedFunctionCell { !statement async? kw<"function"> Star? VariableDefinition ParamList Block }
 }
 
 statement[@isGroup=Statement] {
@@ -97,7 +101,7 @@ ClassDeclaration {
 }
 
 ClassBody {
-  "{" (MethodDeclaration | ";")* "}"
+  "{" (MethodDeclaration | PropertyDeclaration | ";")* "}"
 }
 
 MethodDeclaration[group=ClassItem] {
@@ -107,6 +111,15 @@ MethodDeclaration[group=ClassItem] {
   PropertyNameDefinition
   ParamList
   Block
+}
+
+PropertyDeclaration[group=ClassItem] {
+  pkwMod<"static">?
+  pkwMod<"readonly">?
+  PropertyNameDefinition
+  LogicOp<"!">?
+  ("=" expressionNoComma)?
+  semi
 }
 
 VariableDeclaration {
@@ -294,7 +307,9 @@ PropertyNameDefinition { word }
 
 questionOp[@name=LogicOp] { "?" }
 
-@skip { whitespace | LineComment | BlockComment }
+@skip { spaces | newline | LineComment | BlockComment }
+
+@context trackNewline from "./tokens.js"
 
 @external tokens noSemicolon from "./tokens" { noSemi }
 
@@ -310,10 +325,12 @@ questionOp[@name=LogicOp] { "?" }
  }
 
 @tokens {
-  whitespace { std.whitespace+ }
+  spaces[@export] { $[\u0009 \u000b\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000\ufeff]+ }
+  newline[@export] { $[\r\n\u2028\u2029] }
 
   LineComment { "//" ![\n]* }
 
+  // FIXME split into multiple tokens
   BlockComment { "/*" blockCommentRest }
 
   blockCommentRest { ![*] blockCommentRest | "*" blockCommentAfterStar }
@@ -332,17 +349,17 @@ questionOp[@name=LogicOp] { "?" }
 
   identifier { word }
 
-  @precedence { identifier, whitespace }
+  @precedence { spaces, newline, identifier }
 
-  @precedence { word, whitespace }
+  @precedence { spaces, newline, word }
 
   Number {
     (std.digit ("_" | std.digit)* ("." ("_" | std.digit)*)? | "." std.digit ("_" | std.digit)*)
-       (("e" | "E") ("+" | "-")? ("_" | std.digit)+)? |
-     std.digit ("_" | std.digit)* "n" |
-     "0x" (std.digit | $[a-fA-F] | "_")+ |
-     "0b" $[01_]+ |
-     "0o" $[0-7_]+
+      (("e" | "E") ("+" | "-")? ("_" | std.digit)+)? |
+    std.digit ("_" | std.digit)* "n" |
+    "0x" (std.digit | $[a-fA-F] | "_")+ |
+    "0b" $[01_]+ |
+    "0o" $[0-7_]+
   }
 
   String {

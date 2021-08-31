@@ -12,7 +12,7 @@ function() {}
 
 ==>
 
-Cell(ExpressionStatement(FunctionExpression(function,ParamList,Block)))
+Cell(UnnamedFunctionCell(function,ParamList("(",")"),Block("{","}")))
 
 # Anonymous class declaration
 
@@ -20,7 +20,7 @@ class {}
 
 ==>
 
-Cell(ExpressionStatement(ClassExpression(class,ClassBody)))
+Cell(UnnamedClassCell(class,ClassBody("{","}")))
 
 # Yield expression
 
