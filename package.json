@@ -1,7 +1,7 @@
 {
-  "name": "@lezer/javascript",
-  "version": "0.15.0",
-  "description": "lezer-based JavaScript grammar",
+  "name": "@observablehq/lezer",
+  "version": "2.1.0",
+  "description": "A Lezer grammar for Observable JavaScript",
   "main": "dist/index.cjs",
   "type": "module",
   "exports": {
@@ -23,12 +23,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lezer-parser/javascript.git"
+    "url": "https://github.com/observablehq/lezer.git"
   },
   "scripts": {
     "build": "lezer-generator src/javascript.grammar -o src/parser && rollup -c",
     "build-debug": "lezer-generator src/javascript.grammar --names -o src/parser && rollup -c",
     "prepare": "npm run build",
     "test": "mocha test/test-*.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

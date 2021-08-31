@@ -1,0 +1,111 @@
+# Number expression
+
+foo = 0
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,Number))
+
+# Block with return
+
+foo = { return 0; }
+
+==>
+
+Cell(NamedBlockCell(VariableDefinition,Equals,Block(ReturnStatement(return,Number))))
+
+# Block with await return
+
+foo = { return await 0; }
+
+==>
+
+Cell(NamedBlockCell(VariableDefinition,Equals,Block(ReturnStatement(return,UnaryExpression(await,Number)))))
+
+# Block with yield
+
+foo = { yield 0; }
+
+==>
+
+Cell(NamedBlockCell(VariableDefinition,Equals,Block(ExpressionStatement(UnaryExpression(yield,Number)))))
+
+# Block with label statement
+
+foo = { bar: 0 }
+
+==>
+
+Cell(NamedBlockCell(VariableDefinition,Equals,Block(LabeledStatement(Label,ExpressionStatement(Number)))))
+
+# Object expression
+
+foo = ({})
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,ParenthesizedExpression(ObjectExpression)))
+
+# Comma expression
+
+foo = 1, 2, 3
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,SequenceExpression(Number,Number,Number)))
+
+# Named class declaration
+
+class Foo {}
+
+==>
+
+Cell(NamedClassCell(class,VariableDefinition,ClassBody))
+
+# Named class expression
+
+Foo = class {}
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,ClassExpression(class,ClassBody)))
+
+# Named function declaration
+
+function foo() {}
+
+==>
+
+Cell(NamedFunctionCell(function,VariableDefinition,ParamList,Block))
+
+# Named function expression
+
+foo = function() {}
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,FunctionExpression(function,ParamList,Block)))
+
+# Named generator function expression
+
+foo = function*() {}
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,FunctionExpression(function,Star,ParamList,Block)))
+
+# Named async function expression
+
+foo = async function() {}
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,FunctionExpression(async,function,ParamList,Block)))
+
+# Named arrow function expression
+
+foo = () => {}
+
+==>
+
+Cell(NamedExpressionCell(VariableDefinition,Equals,ArrowFunction(ParamList,Arrow,Block)))
