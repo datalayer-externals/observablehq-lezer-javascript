@@ -20,7 +20,6 @@
   and @left,
   or @left,
   ternary @right,
-  cellname @cut,
   assign @right,
   comma @left,
   statement @cut
@@ -30,8 +29,8 @@
   ImportDeclaration |
   Block |
   ExpressionStatement |
-  NamedBlockCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" Block } |
-  NamedExpressionCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) !cellname "=" expression semi } |
+  NamedBlockCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) "=" Block } |
+  NamedExpressionCell[@dynamicPrecedence=1] { (VariableDefinition | QualifiedVariableDefinition) "=" expression semi } |
   // We have to supply rules for both named and unnamed classes and functions
   // due to the way statement precedence is specified. Without this, it tries to
   // apply the NamedClassCell to a function/class expression, which then fails
