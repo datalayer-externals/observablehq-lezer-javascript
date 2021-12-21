@@ -197,6 +197,9 @@ Cell(Block(LabeledStatement(Label,ForStatement(for,ForSpec,Block(
   class Foo extends require('another-class') {
     constructor() { super(); }
     bar() { super.a(); }
+    prop;
+    etc = 20;
+    static { f() }
   }
 }
 
@@ -209,7 +212,34 @@ Cell(Block(
     MethodDeclaration(PropertyDefinition,ParamList,Block))),
   ClassDeclaration(class,VariableDefinition,extends,CallExpression(VariableName,ArgList(String)),ClassBody(
     MethodDeclaration(PropertyDefinition,ParamList,Block(ExpressionStatement(CallExpression(super,ArgList)))),
-    MethodDeclaration(PropertyDefinition,ParamList,Block(ExpressionStatement(CallExpression(MemberExpression(super,PropertyName),ArgList))))))))
+    MethodDeclaration(PropertyDefinition,ParamList,Block(ExpressionStatement(CallExpression(MemberExpression(super,PropertyName),ArgList)))),
+    PropertyDeclaration(PropertyDefinition),
+    PropertyDeclaration(PropertyDefinition,Equals,Number),
+    StaticBlock(static, Block(ExpressionStatement(CallExpression(VariableName,ArgList))))))))
+
+# Private properties
+
+{
+  class Foo {
+    #bar() { this.#a() + this.#prop == #prop in this; }
+    #prop;
+    #etc = 20;
+  }
+}
+
+==>
+
+Cell(Block(ClassDeclaration(class,VariableDefinition,ClassBody(
+  MethodDeclaration(PrivatePropertyDefinition,ParamList,Block(
+    ExpressionStatement(BinaryExpression(
+       BinaryExpression(
+         CallExpression(MemberExpression(this,PrivatePropertyName),ArgList),
+         ArithOp,
+         MemberExpression(this,PrivatePropertyName)),
+       CompareOp,
+       BinaryExpression(PrivatePropertyName, in, this))))),
+  PropertyDeclaration(PrivatePropertyDefinition),
+  PropertyDeclaration(PrivatePropertyDefinition,Equals,Number)))))
 
 # Empty statements
 
@@ -258,7 +288,7 @@ Cell(Block(
 # Recover from invalid char
 
 {
-  const {foo#bar} = {};
+  const {foobar} = {};
 }
 
 ==>
