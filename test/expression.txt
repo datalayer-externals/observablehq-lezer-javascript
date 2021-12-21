@@ -207,8 +207,8 @@ Cell(
 ==>
 
 Cell(ExpressionStatement(ParenthesizedExpression(ObjectExpression(
-  Property(PropertyNameDefinition,ArrowFunction(ParamList,Arrow,Number)),
-  Property(PropertyNameDefinition,String)))))
+  Property(PropertyDefinition,ArrowFunction(ParamList,Arrow,Number)),
+  Property(PropertyDefinition,String)))))
 
 # Long potential arrow function
 
@@ -442,11 +442,11 @@ foo({},
 
 Cell(ExpressionStatement(CallExpression(VariableName,ArgList(
   ObjectExpression,
-  ObjectExpression(Property(PropertyNameDefinition,String)),
-  ObjectExpression(Property(PropertyNameDefinition,String),Property(String,VariableName),Property(Number,Number)),
-  ObjectExpression(Property(PropertyNameDefinition),Property(VariableName,ParamList,Block)),
-  ObjectExpression(Property(PropertyNameDefinition),Property(PropertyNameDefinition)),
-  ObjectExpression(Property(PropertyNameDefinition))))))
+  ObjectExpression(Property(PropertyDefinition,String)),
+  ObjectExpression(Property(PropertyDefinition,String),Property(String,VariableName),Property(Number,Number)),
+  ObjectExpression(Property(PropertyDefinition),Property(VariableName,ParamList,Block)),
+  ObjectExpression(Property(PropertyDefinition),Property(PropertyDefinition)),
+  ObjectExpression(Property(PropertyDefinition))))))
 
 # Method definitions
 
@@ -469,14 +469,14 @@ Cell(ExpressionStatement(CallExpression(VariableName,ArgList(
 ==>
 
 Cell(ExpressionStatement(ParenthesizedExpression(ObjectExpression(
-  Property(PropertyNameDefinition,BooleanLiteral),
-  Property(PropertyNameDefinition,ParamList(VariableDefinition,VariableDefinition),
+  Property(PropertyDefinition,BooleanLiteral),
+  Property(PropertyDefinition,ParamList(VariableDefinition,VariableDefinition),
     Block(ReturnStatement(return,BinaryExpression(VariableName,ArithOp,VariableName)))),
-  Property(get,PropertyNameDefinition,ParamList,Block(ReturnStatement(return,VariableName))),
-  Property(set,PropertyNameDefinition,ParamList(VariableDefinition),
+  Property(get,PropertyDefinition,ParamList,Block(ReturnStatement(return,VariableName))),
+  Property(set,PropertyDefinition,ParamList(VariableDefinition),
     Block(ExpressionStatement(AssignmentExpression(VariableName,Equals,VariableName)))),
-  Property(Star,PropertyNameDefinition,ParamList,Block(ExpressionStatement(UnaryExpression(yield,VariableName)))),
-  Property(PropertyNameDefinition,ParamList,Block(ReturnStatement(return,Number)))))))
+  Property(Star,PropertyDefinition,ParamList,Block(ExpressionStatement(UnaryExpression(yield,VariableName)))),
+  Property(PropertyDefinition,ParamList,Block(ReturnStatement(return,Number)))))))
 
 # Keyword property names
 
@@ -492,12 +492,12 @@ Cell(ExpressionStatement(ParenthesizedExpression(ObjectExpression(
 ==>
 
 Cell(ExpressionStatement(ParenthesizedExpression(ObjectExpression(
-  Property(PropertyNameDefinition,ParamList,Block),
-  Property(PropertyNameDefinition,ParamList,Block),
-  Property(PropertyNameDefinition,FunctionExpression(function,ParamList,Block)),
-  Property(PropertyNameDefinition,ParamList,Block),
-  Property(PropertyNameDefinition,BooleanLiteral),
-  Property(PropertyNameDefinition,BooleanLiteral)))))
+  Property(PropertyDefinition,ParamList,Block),
+  Property(PropertyDefinition,ParamList,Block),
+  Property(PropertyDefinition,FunctionExpression(function,ParamList,Block)),
+  Property(PropertyDefinition,ParamList,Block),
+  Property(PropertyDefinition,BooleanLiteral),
+  Property(PropertyDefinition,BooleanLiteral)))))
 
 # Generator functions
 
@@ -740,7 +740,7 @@ Cell(Block(
 Cell(Block(
   ExpressionStatement(SequenceExpression(AssignmentExpression(VariableName,Equals,Number),AssignmentExpression(VariableName,Equals,Number))),
   ExpressionStatement(AssignmentExpression(VariableName,Equals,ObjectExpression(
-    Property(PropertyNameDefinition,ParenthesizedExpression(SequenceExpression(Number,BinaryExpression(Number,ArithOp,Number)))))))))
+    Property(PropertyDefinition,ParenthesizedExpression(SequenceExpression(Number,BinaryExpression(Number,ArithOp,Number)))))))))
 
 # Punctuation
 

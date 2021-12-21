@@ -40,7 +40,7 @@ Cell(Block(
 
 Cell(Block(
   FunctionDeclaration(async,function,VariableDefinition,ParamList,Block),
-  ClassDeclaration(class,VariableDefinition,ClassBody(MethodDeclaration(async,PropertyNameDefinition,ParamList,Block))),
+  ClassDeclaration(class,VariableDefinition,ClassBody(MethodDeclaration(async,PropertyDefinition,ParamList,Block))),
   ExpressionStatement(ArrowFunction(async,ParamList(VariableDefinition),Arrow,Block(ReturnStatement(return,VariableName))))))
 
 # If statements
@@ -204,12 +204,12 @@ Cell(Block(LabeledStatement(Label,ForStatement(for,ForSpec,Block(
 
 Cell(Block(
   ClassDeclaration(class,VariableDefinition,ClassBody(
-    MethodDeclaration(static,PropertyNameDefinition,ParamList(VariableDefinition),Block(ReturnStatement(return,VariableName))),
-    MethodDeclaration(PropertyNameDefinition,ParamList(VariableDefinition),Block(ReturnStatement(return,VariableName))),
-    MethodDeclaration(PropertyNameDefinition,ParamList,Block))),
+    MethodDeclaration(static,PropertyDefinition,ParamList(VariableDefinition),Block(ReturnStatement(return,VariableName))),
+    MethodDeclaration(PropertyDefinition,ParamList(VariableDefinition),Block(ReturnStatement(return,VariableName))),
+    MethodDeclaration(PropertyDefinition,ParamList,Block))),
   ClassDeclaration(class,VariableDefinition,extends,CallExpression(VariableName,ArgList(String)),ClassBody(
-    MethodDeclaration(PropertyNameDefinition,ParamList,Block(ExpressionStatement(CallExpression(super,ArgList)))),
-    MethodDeclaration(PropertyNameDefinition,ParamList,Block(ExpressionStatement(CallExpression(MemberExpression(super,PropertyName),ArgList))))))))
+    MethodDeclaration(PropertyDefinition,ParamList,Block(ExpressionStatement(CallExpression(super,ArgList)))),
+    MethodDeclaration(PropertyDefinition,ParamList,Block(ExpressionStatement(CallExpression(MemberExpression(super,PropertyName),ArgList))))))))
 
 # Empty statements
 

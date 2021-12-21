@@ -108,7 +108,7 @@ MethodDeclaration[group=ClassItem] {
   pkwMod<"static">?
   pkwMod<"async">?
   (pkwMod<"get"> | pkwMod<"set"> | Star)?
-  PropertyNameDefinition
+  PropertyDefinition
   ParamList
   Block
 }
@@ -116,7 +116,7 @@ MethodDeclaration[group=ClassItem] {
 PropertyDeclaration[group=ClassItem] {
   pkwMod<"static">?
   pkwMod<"readonly">?
-  PropertyNameDefinition
+  PropertyDefinition
   LogicOp<"!">?
   ("=" expressionNoComma)?
   semi
@@ -194,7 +194,7 @@ ArrayExpression {
   "[" commaSep1<"..."? expressionNoComma | ""> ~destructure "]"
 }
 
-propName { PropertyNameDefinition | "[" expression "]" | Number | String }
+propName { PropertyDefinition | "[" expression "]" | Number | String }
 
 Property {
   pkwMod<"async">? (pkwMod<"get"> | pkwMod<"set"> | Star)? propName ParamList Block |
@@ -303,7 +303,7 @@ Label { identifier }
 
 PropertyName { word }
 
-PropertyNameDefinition { word }
+PropertyDefinition { word }
 
 questionOp[@name=LogicOp] { "?" }
 
