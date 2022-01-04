@@ -1,4 +1,6 @@
 @precedence {
+  intersection @left,
+  union @left,
   else @right,
   member,
   newArgs,
@@ -101,23 +103,25 @@ ClassDeclaration {
 }
 
 ClassBody {
-  "{" (MethodDeclaration | PropertyDeclaration | ";")* "}"
+  "{" (MethodDeclaration | PropertyDeclaration | StaticBlock | ";")* "}"
 }
 
 MethodDeclaration[group=ClassItem] {
   pkwMod<"static">?
   pkwMod<"async">?
   (pkwMod<"get"> | pkwMod<"set"> | Star)?
-  PropertyNameDefinition
-  ParamList
+  (PropertyDefinition | PrivatePropertyDefinition)
+  functionSignature
   Block
+}
+
+StaticBlock[group=ClassItem] {
+  pkwMod<"static"> Block
 }
 
 PropertyDeclaration[group=ClassItem] {
   pkwMod<"static">?
-  pkwMod<"readonly">?
-  PropertyNameDefinition
-  LogicOp<"!">?
+  (PropertyDefinition | PrivatePropertyDefinition)
   ("=" expressionNoComma)?
   semi
 }
@@ -183,7 +187,7 @@ expressionNoComma {
   AssignmentExpression |
   PostfixExpression { expressionNoComma !postfix (incdec | LogicOp<"!">) } |
   CallExpression { expressionNoComma !call ArgList } |
-  TaggedTemplatExpression { expressionNoComma !taggedTemplate TemplateString } |
+  TaggedTemplateExpression { expressionNoComma !taggedTemplate TemplateString } |
   DynamicImport { kw<"import"> "(" expressionNoComma ")" } |
   ImportMeta { kw<"import"> "." PropertyName }
 }
@@ -194,10 +198,10 @@ ArrayExpression {
   "[" commaSep1<"..."? expressionNoComma | ""> ~destructure "]"
 }
 
-propName { PropertyNameDefinition | "[" expression "]" | Number | String }
+propName { PropertyDefinition | "[" expression "]" | Number | String }
 
 Property {
-  pkwMod<"async">? (pkwMod<"get"> | pkwMod<"set"> | Star)? propName ParamList Block |
+  pkwMod<"async">? (pkwMod<"get"> | pkwMod<"set"> | Star)? propName functionSignature Block |
   propName ~destructure (":" expressionNoComma)? |
   "..." expressionNoComma
 }
@@ -211,8 +215,10 @@ ClassExpression {
   kw<"class"> VariableDefinition? (kw<"extends"> expression)? ClassBody
 }
 
+functionSignature { ParamList }
+
 FunctionExpression {
-  async? kw<"function"> Star? VariableDefinition? ParamList Block
+  async? kw<"function"> Star? VariableDefinition? functionSignature Block
 }
 
 UnaryExpression {
@@ -226,7 +232,8 @@ BinaryExpression {
   expressionNoComma !times (divide | ArithOp<"%"> | ArithOp<"*">) expressionNoComma |
   expressionNoComma !plus ArithOp<"+" | "-"> expressionNoComma |
   expressionNoComma !shift BitOp<">>" ">"? | "<<"> expressionNoComma |
-  expressionNoComma !rel (LessThan | CompareOp<"<=" | ">" "="?> | kw<"in"> | kw<"instanceof">) expressionNoComma |
+  expressionNoComma !rel (LessThan | CompareOp<"<=" | ">" "="?> | kw<"instanceof">) expressionNoComma |
+  (expressionNoComma | PrivatePropertyName) !rel kw<"in"> expressionNoComma |
   expressionNoComma !equal CompareOp<"==" "="? | "!=" "="?> expressionNoComma |
   expressionNoComma !bitOr BitOp { "|" } expressionNoComma |
   expressionNoComma !bitXor BitOp<"^"> expressionNoComma |
@@ -242,7 +249,7 @@ AssignmentExpression {
 }
 
 MemberExpression {
-  expressionNoComma !member (("." | "?.") PropertyName | "[" expression "]")
+  expressionNoComma !member (("." | "?.") (PropertyName | PrivatePropertyName) | "[" expression "]")
 }
 
 ArgList {
@@ -303,7 +310,11 @@ Label { identifier }
 
 PropertyName { word }
 
-PropertyNameDefinition { word }
+PropertyDefinition { word }
+
+PrivatePropertyName { privateIdentifier }
+
+PrivatePropertyDefinition { privateIdentifier }
 
 questionOp[@name=LogicOp] { "?" }
 
@@ -349,6 +360,8 @@ questionOp[@name=LogicOp] { "?" }
 
   identifier { word }
 
+  privateIdentifier { "#" word }
+
   @precedence { spaces, newline, identifier }
 
   @precedence { spaces, newline, word }
@@ -357,9 +370,9 @@ questionOp[@name=LogicOp] { "?" }
     (std.digit ("_" | std.digit)* ("." ("_" | std.digit)*)? | "." std.digit ("_" | std.digit)*)
       (("e" | "E") ("+" | "-")? ("_" | std.digit)+)? |
     std.digit ("_" | std.digit)* "n" |
-    "0x" (std.digit | $[a-fA-F] | "_")+ |
-    "0b" $[01_]+ |
-    "0o" $[0-7_]+
+    "0x" (std.digit | $[a-fA-F] | "_")+ "n"? |
+    "0b" $[01_]+ "n"? |
+    "0o" $[0-7_]+ "n"?
   }
 
   String {
