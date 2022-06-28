@@ -2,25 +2,32 @@
 # yarn lockfile v1
 
 
-"@lezer/common@^0.15.0":
-  version "0.15.11"
-  resolved "https://registry.yarnpkg.com/@lezer/common/-/common-0.15.11.tgz#965b5067036305f12e8a3efc344076850be1d3a8"
-  integrity sha512-vv0nSdIaVCRcJ8rPuDdsrNVfBOYe/4Szr/LhF929XyDmBndLDuWiCCHooGlGlJfzELyO608AyDhVsuX/ZG36NA==
+"@lezer/common@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@lezer/common/-/common-1.0.0.tgz#1c95ae53ec17706aa3cbcc88b52c23f22ed56096"
+  integrity sha512-ohydQe+Hb+w4oMDvXzs8uuJd2NoA3D8YDcLiuDsLqH+yflDTPEpgCsWI3/6rH5C3BAedtH1/R51dxENldQceEA==
 
-"@lezer/generator@^0.15.0":
-  version "0.15.2"
-  resolved "https://registry.yarnpkg.com/@lezer/generator/-/generator-0.15.2.tgz#10fa8fab58a561c2bd2a27d7b4f20b1080c6cb6c"
-  integrity sha512-nxY6TTj0ZAcAvg1zEeaZnt1xODdyPhD0lTaPOgcGOVFHhwwx0Oz7CxZB7Rh+xRCXFr5kJWDtM1uXPp80UZjhAg==
+"@lezer/generator@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@lezer/generator/-/generator-1.1.0.tgz#339dc4966e1fec2bc9d7cd308e40942bf15e6d28"
+  integrity sha512-o8LRCpckMKzCRn/uSybiZZG/gXNP8ETTutOAD4VOvuSzB91LO/u3vC7j9PBprr1Yq92x1INMKfX6S7a0YI7Sig==
   dependencies:
-    "@lezer/common" "^0.15.0"
-    "@lezer/lr" "^0.15.0"
+    "@lezer/common" "^1.0.0"
+    "@lezer/lr" "^1.0.0"
 
-"@lezer/lr@^0.15.0":
-  version "0.15.5"
-  resolved "https://registry.yarnpkg.com/@lezer/lr/-/lr-0.15.5.tgz#4bce44169c441d9dda7be398f5202ea65c5f1138"
-  integrity sha512-DEcLyhdmBxD1foQe7RegLrSlfS/XaTMGLkO5evkzHWAQKh/JnFWp7j7iNB7s2EpxzRrBCh0U+W7JDCeFhv2mng==
+"@lezer/highlight@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@lezer/highlight/-/highlight-1.0.0.tgz#1dc82300f5d39fbd67ae1194b5519b4c381878d3"
+  integrity sha512-nsCnNtim90UKsB5YxoX65v3GEIw3iCHw9RM2DtdgkiqAbKh9pCdvi8AWNwkYf10Lu6fxNhXPpkpHbW6mihhvJA==
   dependencies:
-    "@lezer/common" "^0.15.0"
+    "@lezer/common" "^1.0.0"
+
+"@lezer/lr@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@lezer/lr/-/lr-1.1.0.tgz#e452dcbf2869461ccd0faa0fc3285918234e564e"
+  integrity sha512-Iad04uVwk1PvSnj25mqj7zEEIRAsasbsTRmVzI0AUTs/+1Dz1//iYAaoLr7A+Xa7bZDfql5MKTxZmSlkYZD3Dg==
+  dependencies:
+    "@lezer/common" "^1.0.0"
 
 "@rollup/plugin-node-resolve@^9.0.0":
   version "9.0.0"

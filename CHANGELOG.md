@@ -1,3 +1,29 @@
+## 1.0.0 (2022-06-06)
+
+### New features
+
+First stable version.
+
+## 0.16.0 (2022-04-20)
+
+### Breaking changes
+
+Move to 0.16 serialized parser format.
+
+### New features
+
+Add `CatchClause` and `FinallyClause` nodes wrapping parts of `TryStatement`.
+
+The parser now includes syntax highlighting information in its node types.
+
+## 0.15.3 (2022-01-26)
+
+### Bug fixes
+
+Support missing values in array pattern syntax.
+
+Support quoted module export names.
+
 ## 0.15.2 (2021-12-08)
 
 ### Bug fixes
